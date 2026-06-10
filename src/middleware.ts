@@ -90,7 +90,9 @@ export async function middleware(request: NextRequest) {
     req: request,
     secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
     secureCookie: isProduction,
-    salt: isProduction ? "__Secure-authjs.session-token" : "authjs.session-token",
+    salt: isProduction
+      ? "__Secure-authjs.session-token"
+      : "authjs.session-token",
   });
 
   // Keep signed-in users out of guest-only auth pages.

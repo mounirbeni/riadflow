@@ -14,7 +14,6 @@ export async function GET() {
     }
 
     const now = new Date();
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const startOfYear = new Date(now.getFullYear(), 0, 1);
 
     const [
@@ -26,6 +25,11 @@ export async function GET() {
       monthlyBookings,
       pendingBookings,
       pendingPayments,
+      bookingsByRoomRaw,
+      recentBookingsRaw,
+      avgRatingAgg,
+      avgStayAgg,
+      avgValueAgg,
     ] = await Promise.all([
       prisma.booking.aggregate({
         where: { bookingStatus: { not: BookingStatus.CANCELLED } },
@@ -55,6 +59,35 @@ export async function GET() {
       prisma.booking.count({
         where: { paymentStatus: "PENDING_VERIFICATION" },
       }),
+      prisma.booking.groupBy({
+        by: ["roomId"],
+        where: { bookingStatus: { not: BookingStatus.CANCELLED } },
+        _count: { id: true },
+      }),
+      prisma.booking.findMany({
+        where: {
+          bookingStatus: { not: BookingStatus.CANCELLED },
+          checkIn: { gte: new Date(now.getFullYear(), now.getMonth(), 1) },
+        },
+        include: {
+          room: { select: { name: true } },
+          user: { select: { name: true, email: true } },
+        },
+        orderBy: { checkIn: "asc" },
+        take: 5,
+      }),
+      prisma.review.aggregate({
+        where: { isApproved: true },
+        _avg: { rating: true },
+      }),
+      prisma.booking.aggregate({
+        where: { bookingStatus: { not: BookingStatus.CANCELLED } },
+        _avg: { totalNights: true },
+      }),
+      prisma.booking.aggregate({
+        where: { bookingStatus: { not: BookingStatus.CANCELLED } },
+        _avg: { totalAmount: true },
+      }),
     ]);
 
     // Calculate occupancy rate (simplified)
@@ -65,6 +98,28 @@ export async function GET() {
     const occupancyRate = totalRooms > 0
       ? Math.min(100, Math.round((bookedDays / (totalRooms * totalDays)) * 100))
       : 0;
+
+    // Map room IDs to names for pie chart
+    const roomIds = bookingsByRoomRaw.map((b) => b.roomId);
+    const rooms = await prisma.room.findMany({
+      where: { id: { in: roomIds } },
+      select: { id: true, name: true },
+    });
+    const roomNameMap = new Map(rooms.map((r) => [r.id, r.name]));
+    const bookingsByRoom = bookingsByRoomRaw.map((b) => ({
+      name: roomNameMap.get(b.roomId) || "Unknown",
+      value: b._count.id,
+    }));
+
+    // Recent bookings
+    const recentBookings = recentBookingsRaw.map((b) => ({
+      guest: b.guestName || b.user?.name || "Guest",
+      room: b.room?.name || "Unknown",
+      checkIn: b.checkIn.toLocaleDateString("en-GB", { day: "numeric", month: "short" }),
+      nights: b.totalNights,
+      amount: `€${Number(b.totalAmount).toFixed(0)}`,
+      status: b.bookingStatus.toLowerCase(),
+    }));
 
     return NextResponse.json({
       success: true,
@@ -83,6 +138,11 @@ export async function GET() {
           month: m.checkIn.toISOString().slice(0, 7),
           bookings: m._count.id,
         })),
+        bookingsByRoom,
+        recentBookings,
+        avgRating: avgRatingAgg._avg.rating ? Number(avgRatingAgg._avg.rating).toFixed(1) : "0.0",
+        avgStayLength: avgStayAgg._avg.totalNights ? Number(avgStayAgg._avg.totalNights).toFixed(1) : "0.0",
+        avgBookingValue: avgValueAgg._avg.totalAmount ? Number(avgValueAgg._avg.totalAmount).toFixed(0) : "0",
       },
     });
   } catch (error) {

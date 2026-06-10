@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { BookingStatus, PaymentStatus } from "@prisma/client";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const session = await auth();
     if (!session?.user?.id || session.user.role !== "ADMIN") {
@@ -11,6 +11,41 @@ export async function GET() {
         { success: false, error: "Unauthorized" },
         { status: 401 }
       );
+    }
+
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (id) {
+      const booking = await prisma.booking.findUnique({
+        where: { id },
+        include: {
+          user: { select: { id: true, name: true, email: true, phone: true } },
+          room: { select: { id: true, name: true, slug: true, pricePerNight: true } },
+          messages: {
+            include: { sender: { select: { id: true, name: true, role: true } } },
+            orderBy: { createdAt: "asc" },
+          },
+          review: true,
+          availability: true,
+        },
+      });
+
+      if (!booking) {
+        return NextResponse.json(
+          { success: false, error: "Booking not found" },
+          { status: 404 }
+        );
+      }
+
+      const serialized = {
+        ...booking,
+        pricePerNight: Number(booking.pricePerNight),
+        totalAmount: Number(booking.totalAmount),
+        depositAmount: Number(booking.depositAmount),
+      };
+
+      return NextResponse.json({ success: true, data: serialized });
     }
 
     const bookings = await prisma.booking.findMany({

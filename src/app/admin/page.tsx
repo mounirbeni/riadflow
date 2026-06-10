@@ -41,26 +41,21 @@ interface AnalyticsData {
   pendingPayments: number;
   monthlyRevenue: { month: string; revenue: number }[];
   monthlyBookings: { month: string; bookings: number }[];
+  bookingsByRoom: { name: string; value: number }[];
+  recentBookings: {
+    guest: string;
+    room: string;
+    checkIn: string;
+    nights: number;
+    amount: string;
+    status: string;
+  }[];
+  avgRating: string;
+  avgStayLength: string;
+  avgBookingValue: string;
 }
 
 const COLORS = ["#D4684A", "#5C9440", "#D4A84A", "#7A6548", "#B8A080", "#9A8260"];
-
-const pieData = [
-  { name: "Sultan Suite", value: 3 },
-  { name: "Kasbah Suite", value: 2 },
-  { name: "Atlas Suite", value: 2 },
-  { name: "Marrakech Room", value: 2 },
-  { name: "Medina View", value: 2 },
-  { name: "Garden Room", value: 2 },
-];
-
-const recentBookings = [
-  { guest: "Sophie Laurent", room: "Kasbah Suite", checkIn: "Jun 8", nights: 7, amount: "€2,940", status: "confirmed" },
-  { guest: "James Wilson", room: "Atlas Suite", checkIn: "Jun 10", nights: 6, amount: "€2,100", status: "confirmed" },
-  { guest: "Emma Johnson", room: "Sultan Suite", checkIn: "Jun 18", nights: 7, amount: "€1,960", status: "confirmed" },
-  { guest: "Hans Mueller", room: "Garden Room", checkIn: "Jun 22", nights: 5, amount: "€825", status: "confirmed" },
-  { guest: "Priya Patel", room: "Sultan Suite", checkIn: "Jul 25", nights: 5, amount: "€1,400", status: "pending" },
-];
 
 export default function AdminDashboardPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
@@ -115,9 +110,6 @@ export default function AdminDashboardPage() {
       icon: CreditCard,
       color: "text-gold-500",
       bg: "bg-gold-50",
-      trend: "+18%",
-      trendUp: true,
-      sub: "vs last quarter",
     },
     {
       label: "Total Bookings",
@@ -125,9 +117,6 @@ export default function AdminDashboardPage() {
       icon: BedDouble,
       color: "text-terracotta-500",
       bg: "bg-terracotta-50",
-      trend: "+12%",
-      trendUp: true,
-      sub: "vs last quarter",
     },
     {
       label: "Total Guests",
@@ -135,9 +124,6 @@ export default function AdminDashboardPage() {
       icon: Users,
       color: "text-olive-500",
       bg: "bg-olive-50",
-      trend: "+21%",
-      trendUp: true,
-      sub: "unique visitors",
     },
     {
       label: "Occupancy Rate",
@@ -145,10 +131,14 @@ export default function AdminDashboardPage() {
       icon: TrendingUp,
       color: "text-sand-600",
       bg: "bg-sand-100",
-      trend: "+5%",
-      trendUp: true,
-      sub: "this month",
     },
+  ];
+
+  const quickStats = [
+    { icon: Star, label: "Avg. Rating", value: `${data.avgRating} / 5.0`, color: "text-gold-500", bg: "bg-gold-50" },
+    { icon: Users, label: "Total Guests", value: data.totalGuests.toString(), color: "text-olive-500", bg: "bg-olive-50" },
+    { icon: BedDouble, label: "Avg. Stay Length", value: `${data.avgStayLength} nights`, color: "text-terracotta-500", bg: "bg-terracotta-50" },
+    { icon: CreditCard, label: "Avg. Booking Value", value: `€${data.avgBookingValue}`, color: "text-sand-600", bg: "bg-sand-100" },
   ];
 
   return (
@@ -160,7 +150,7 @@ export default function AdminDashboardPage() {
             Dashboard
           </h1>
           <p className="text-sand-500 text-sm">
-            Riad Al Baraka — overview as of {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+            RiadFlow — overview as of {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
           </p>
         </div>
         <Link
@@ -222,22 +212,9 @@ export default function AdminDashboardPage() {
                 <div className={`h-10 w-10 rounded-xl ${stat.bg} flex items-center justify-center`}>
                   <stat.icon className={`h-5 w-5 ${stat.color}`} />
                 </div>
-                <div className={`flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${
-                  stat.trendUp
-                    ? "bg-olive-50 text-olive-600"
-                    : "bg-terracotta-50 text-terracotta-600"
-                }`}>
-                  {stat.trendUp ? (
-                    <ArrowUpRight className="h-3 w-3" />
-                  ) : (
-                    <ArrowDownRight className="h-3 w-3" />
-                  )}
-                  {stat.trend}
-                </div>
               </div>
               <p className="text-2xl font-bold text-sand-900 mb-0.5">{stat.value}</p>
               <p className="text-sm font-medium text-sand-600">{stat.label}</p>
-              <p className="text-xs text-sand-400 mt-1">{stat.sub}</p>
             </GlassCard>
           </motion.div>
         ))}
@@ -251,10 +228,6 @@ export default function AdminDashboardPage() {
             <div>
               <h3 className="font-heading text-lg font-semibold text-sand-900">Monthly Revenue</h3>
               <p className="text-sm text-sand-500">Last 6 months</p>
-            </div>
-            <div className="flex items-center gap-2 text-xs bg-terracotta-50 text-terracotta-600 px-3 py-1.5 rounded-full font-medium">
-              <TrendingUp className="h-3.5 w-3.5" />
-              +18% vs prior period
             </div>
           </div>
           <ResponsiveContainer width="100%" height={220}>
@@ -299,7 +272,7 @@ export default function AdminDashboardPage() {
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie
-                data={pieData}
+                data={data.bookingsByRoom}
                 cx="50%"
                 cy="45%"
                 innerRadius={55}
@@ -307,7 +280,7 @@ export default function AdminDashboardPage() {
                 paddingAngle={3}
                 dataKey="value"
               >
-                {pieData.map((_, index) => (
+                {data.bookingsByRoom.map((_, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
@@ -351,15 +324,18 @@ export default function AdminDashboardPage() {
         <GlassCard className="p-6 lg:col-span-2">
           <div className="flex items-center justify-between mb-5">
             <div>
-              <h3 className="font-heading text-lg font-semibold text-sand-900">Recent Bookings</h3>
-              <p className="text-sm text-sand-500">Upcoming confirmed stays</p>
+              <h3 className="font-heading text-lg font-semibold text-sand-900">Upcoming Bookings</h3>
+              <p className="text-sm text-sand-500">Next confirmed stays</p>
             </div>
             <Link href="/admin/bookings" className="text-xs text-terracotta-500 hover:text-terracotta-600 font-medium">
               View all →
             </Link>
           </div>
           <div className="space-y-3">
-            {recentBookings.map((b, i) => (
+            {data.recentBookings.length === 0 && (
+              <p className="text-sm text-sand-500">No upcoming bookings</p>
+            )}
+            {data.recentBookings.map((b, i) => (
               <div key={i} className="flex items-center gap-4 p-3 rounded-xl hover:bg-sand-50 transition-colors">
                 <div className="h-9 w-9 rounded-full bg-terracotta-100 flex items-center justify-center shrink-0">
                   <span className="text-terracotta-600 font-semibold text-sm">{b.guest[0]}</span>
@@ -386,12 +362,7 @@ export default function AdminDashboardPage() {
 
       {/* Quick Stats Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { icon: Star, label: "Avg. Rating", value: "4.9 / 5.0", color: "text-gold-500", bg: "bg-gold-50" },
-          { icon: Users, label: "Returning Guests", value: "38%", color: "text-olive-500", bg: "bg-olive-50" },
-          { icon: BedDouble, label: "Avg. Stay Length", value: "5.1 nights", color: "text-terracotta-500", bg: "bg-terracotta-50" },
-          { icon: CreditCard, label: "Avg. Booking Value", value: "€1,240", color: "text-sand-600", bg: "bg-sand-100" },
-        ].map((item) => (
+        {quickStats.map((item) => (
           <GlassCard key={item.label} className="p-4 flex items-center gap-3">
             <div className={`h-9 w-9 rounded-xl ${item.bg} flex items-center justify-center shrink-0`}>
               <item.icon className={`h-4 w-4 ${item.color}`} />
