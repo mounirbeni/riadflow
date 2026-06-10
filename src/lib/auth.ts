@@ -12,6 +12,8 @@ export const {
   signOut,
 } = NextAuth({
   adapter: PrismaAdapter(prisma) as any,
+  trustHost: true,
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -63,14 +65,14 @@ export const {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.role = (user as any).role;
+        token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        (session.user as any).id = token.id as string;
-        (session.user as any).role = token.role as string;
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
       }
       return session;
     },
