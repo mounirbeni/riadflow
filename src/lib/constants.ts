@@ -1,6 +1,7 @@
 export const APP_NAME = "RiadFlow";
 export const APP_TAGLINE = "Luxury Moroccan Riad Booking";
-export const APP_URL = process.env.NEXTAUTH_URL || "http://localhost:3000";
+export const APP_URL =
+  process.env.AUTH_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
 
 export const CURRENCY = "EUR";
 export const CURRENCY_SYMBOL = "€";

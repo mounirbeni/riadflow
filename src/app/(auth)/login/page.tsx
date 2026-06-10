@@ -1,9 +1,8 @@
 "use client";
 
-import { Suspense } from "react";
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -13,15 +12,54 @@ import { GlassCard } from "@/components/shared/glass-card";
 import { toast } from "sonner";
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 
+const AUTH_PATHS = ["/login", "/register", "/forgot-password"];
+const DEFAULT_CALLBACK_URL = "/dashboard";
+
+function getSafeCallbackUrl(value: string | null) {
+  if (!value) return DEFAULT_CALLBACK_URL;
+
+  try {
+    const url = new URL(value, "http://localhost");
+    const path = `${url.pathname}${url.search}${url.hash}`;
+
+    if (!path.startsWith("/") || path.startsWith("//")) {
+      return DEFAULT_CALLBACK_URL;
+    }
+
+    if (AUTH_PATHS.some((authPath) => url.pathname === authPath)) {
+      return DEFAULT_CALLBACK_URL;
+    }
+
+    if (
+      typeof window !== "undefined" &&
+      url.origin !== "http://localhost" &&
+      url.origin !== window.location.origin
+    ) {
+      return DEFAULT_CALLBACK_URL;
+    }
+
+    return path;
+  } catch {
+    return DEFAULT_CALLBACK_URL;
+  }
+}
+
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const callbackUrl = getSafeCallbackUrl(searchParams.get("callbackUrl"));
+  const { status } = useSession();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace(callbackUrl);
+    }
+  }, [callbackUrl, router, status]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -32,15 +70,14 @@ function LoginForm() {
         email,
         password,
         redirect: false,
-        callbackUrl,
+        redirectTo: callbackUrl,
       });
 
-      if (result?.error) {
+      if (!result?.ok || result.error) {
         toast.error("Invalid email or password");
       } else {
         toast.success("Welcome back!");
-        router.push(callbackUrl);
-        router.refresh();
+        window.location.assign(getSafeCallbackUrl(result.url || callbackUrl));
       }
     } catch {
       toast.error("Something went wrong");
