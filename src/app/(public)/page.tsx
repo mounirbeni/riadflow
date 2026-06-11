@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { GlassCard } from "@/components/shared/glass-card";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Navbar } from "@/components/shared/navbar";
@@ -343,37 +342,6 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
-
-      {/* ── Platform Preview ─────────────────────────────────────────────── */}
-      <section className="bg-sand-50 overflow-hidden">
-        <ContainerScroll
-          titleComponent={
-            <div className="mb-6">
-              <p className="font-accent italic text-terracotta-500 text-lg md:text-xl mb-3 tracking-wide">
-                The Riad Experience
-              </p>
-              <h2 className="font-heading text-4xl md:text-6xl font-bold text-sand-900 leading-tight">
-                Every corner tells
-                <br />
-                <span className="text-terracotta-500">a story</span>
-              </h2>
-              <p className="text-sand-600 text-base md:text-lg mt-4 max-w-xl mx-auto">
-                Step inside Riad Al Baraka — centuries of Moroccan craftsmanship
-                await you at every turn.
-              </p>
-            </div>
-          }
-        >
-          <Image
-            src="https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=1400&q=80"
-            alt="Riad Al Baraka interior courtyard"
-            width={1400}
-            height={700}
-            className="mx-auto rounded-2xl object-cover h-full w-full object-center"
-            draggable={false}
-          />
-        </ContainerScroll>
       </section>
 
       {/* ── Featured Rooms ───────────────────────────────────────────────── */}
