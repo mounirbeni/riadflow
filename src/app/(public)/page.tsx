@@ -115,7 +115,7 @@ const experiences = [
     description: "Full-day adventure to Berber villages, mountain valleys, and lunch with a local family.",
     price: 120,
     duration: "8 hours",
-    image: "https://images.unsplash.com/photo-1542086260?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80",
     icon: Mountain,
     color: "from-olive-600/80",
   },
@@ -570,7 +570,7 @@ export default function HomePage() {
             >
               <div className="relative h-[480px] rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1547592180?w=800&q=80"
+                  src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80"
                   alt="Moroccan Breakfast spread"
                   fill
                   className="object-cover"

@@ -434,7 +434,7 @@ async function main() {
         shortDesc: "Full-day Berber village and mountain hiking adventure",
         price: 120,
         duration: "8 hours",
-        image: "https://images.unsplash.com/photo-1542086260?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80",
         category: ExperienceCategory.EXCURSION,
         sortOrder: 5,
       },
@@ -527,7 +527,7 @@ async function main() {
       data: { url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80", caption: "Rooftop Dinner Under the Stars", category: GalleryCategory.FOOD, sortOrder: 10 },
     }),
     prisma.galleryImage.create({
-      data: { url: "https://images.unsplash.com/photo-1547592180?w=800&q=80", caption: "Traditional Moroccan Breakfast", category: GalleryCategory.FOOD, sortOrder: 11 },
+      data: { url: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80", caption: "Traditional Moroccan Breakfast", category: GalleryCategory.FOOD, sortOrder: 11 },
     }),
     prisma.galleryImage.create({
       data: { url: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800&q=80", caption: "Lamb Tagine with Prunes", category: GalleryCategory.FOOD, sortOrder: 12 },

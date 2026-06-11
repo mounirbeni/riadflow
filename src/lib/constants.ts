@@ -45,7 +45,7 @@ export const EXPERIENCE_IMAGES = [
   "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=800&q=80",
   "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80",
   "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
-  "https://images.unsplash.com/photo-1542086260?w=800&q=80",
+  "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80",
   "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80",
 ];
 
@@ -56,6 +56,6 @@ export const GALLERY_IMAGES = [
   "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80",
   "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=800&q=80",
   "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
-  "https://images.unsplash.com/photo-1547592180?w=800&q=80",
+  "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80",
   "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80",
 ];
