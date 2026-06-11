@@ -24,6 +24,52 @@ const DEFAULT_KEYS = [
   { key: "instagram_url", label: "Instagram URL", placeholder: "https://instagram.com/..." },
 ];
 
+function SettingRow({
+  def,
+  index,
+  initialValue,
+  onSave,
+}: {
+  def: (typeof DEFAULT_KEYS)[number];
+  index: number;
+  initialValue: string;
+  onSave: (key: string, value: string) => void;
+}) {
+  const [value, setValue] = useState(initialValue);
+
+  return (
+    <motion.div
+      key={def.key}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05 }}
+    >
+      <GlassCard className="p-5">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <div className="flex-1">
+            <label className="block text-sm font-medium text-sand-900 mb-1">{def.label}</label>
+            <p className="text-xs text-sand-400 mb-2">Key: {def.key}</p>
+            <input
+              type="text"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder={def.placeholder}
+              className="w-full px-4 py-2.5 rounded-xl border border-sand-200 bg-white focus:outline-none focus:ring-2 focus:ring-terracotta-400 text-sm"
+            />
+          </div>
+          <Button
+            onClick={() => onSave(def.key, value)}
+            className="bg-terracotta-500 hover:bg-terracotta-600 text-white rounded-full gap-1 mt-6"
+          >
+            <Save className="h-4 w-4" />
+            Save
+          </Button>
+        </div>
+      </GlassCard>
+    </motion.div>
+  );
+}
+
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<SiteSetting[]>([]);
   const [loading, setLoading] = useState(true);
@@ -92,42 +138,15 @@ export default function AdminSettingsPage() {
       </div>
 
       <div className="space-y-4">
-        {DEFAULT_KEYS.map((def, index) => {
-          const existing = settingsMap.get(def.key);
-          const [value, setValue] = useState(existing?.value || "");
-
-          return (
-            <motion.div
-              key={def.key}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-            >
-              <GlassCard className="p-5">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                  <div className="flex-1">
-                    <label className="block text-sm font-medium text-sand-900 mb-1">{def.label}</label>
-                    <p className="text-xs text-sand-400 mb-2">Key: {def.key}</p>
-                    <input
-                      type="text"
-                      value={value}
-                      onChange={(e) => setValue(e.target.value)}
-                      placeholder={def.placeholder}
-                      className="w-full px-4 py-2.5 rounded-xl border border-sand-200 bg-white focus:outline-none focus:ring-2 focus:ring-terracotta-400 text-sm"
-                    />
-                  </div>
-                  <Button
-                    onClick={() => saveSetting(def.key, value)}
-                    className="bg-terracotta-500 hover:bg-terracotta-600 text-white rounded-full gap-1 mt-6"
-                  >
-                    <Save className="h-4 w-4" />
-                    Save
-                  </Button>
-                </div>
-              </GlassCard>
-            </motion.div>
-          );
-        })}
+        {DEFAULT_KEYS.map((def, index) => (
+          <SettingRow
+            key={def.key}
+            def={def}
+            index={index}
+            initialValue={settingsMap.get(def.key)?.value || ""}
+            onSave={saveSetting}
+          />
+        ))}
       </div>
 
       <GlassCard className="p-5">
