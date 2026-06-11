@@ -3,6 +3,7 @@ import { Inter, Playfair_Display, Cormorant_Garamond } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { DemoBanner } from "@/components/shared/demo-banner";
 import Script from "next/script";
 import "./globals.css";
 
@@ -85,6 +86,7 @@ export default function RootLayout({
           <TooltipProvider>
             {children}
             <Toaster position="top-right" richColors />
+            <DemoBanner />
           </TooltipProvider>
         </SessionProvider>
         <Script id="sw-register" strategy="afterInteractive">{`

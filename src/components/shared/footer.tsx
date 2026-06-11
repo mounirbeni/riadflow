@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, Phone, Mail, Globe, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Globe, MessageCircle, Code2 } from "lucide-react";
 
 export function Footer() {
   return (
@@ -120,7 +120,23 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-sand-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* mbndev.ma credit bar */}
+        <div className="border-t border-sand-800 mt-12 pt-6 pb-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-center">
+            <span className="text-sand-500 text-sm">Demo project designed &amp; built by</span>
+            <a
+              href="https://mbndev.ma"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-terracotta-400 hover:text-terracotta-300 font-semibold text-sm transition-colors"
+            >
+              <Code2 className="h-4 w-4" />
+              mbndev.ma
+            </a>
+          </div>
+        </div>
+
+        <div className="border-t border-sand-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sand-500 text-sm">
             &copy; {new Date().getFullYear()} RiadFlow. All rights reserved.
           </p>

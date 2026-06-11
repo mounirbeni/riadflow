@@ -16,6 +16,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Menu,
+  Home,
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -75,6 +76,21 @@ export function AdminSidebar() {
           );
         })}
       </nav>
+
+      {/* Back to website */}
+      <div className="p-3 border-t border-sand-200">
+        <Link
+          href="/"
+          className={cn(
+            "flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors text-sand-500 hover:bg-terracotta-50 hover:text-terracotta-600",
+            collapsed && "justify-center"
+          )}
+          title="Back to Website"
+        >
+          <Home className="h-5 w-5 flex-shrink-0" />
+          {!collapsed && <span className="text-sm font-medium">← Back to Website</span>}
+        </Link>
+      </div>
     </div>
   );
 
