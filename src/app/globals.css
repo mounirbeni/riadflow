@@ -128,9 +128,12 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    -webkit-tap-highlight-color: transparent;
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
   }
   html {
     @apply font-sans;
@@ -138,6 +141,14 @@
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-playfair), serif;
+  }
+  /* Prevent iOS auto-zoom on input focus */
+  input, select, textarea {
+    font-size: max(16px, 1em);
+  }
+  /* Faster touch response */
+  a, button, [role="button"] {
+    touch-action: manipulation;
   }
 }
 
@@ -178,5 +189,12 @@
   }
   .text-balance {
     text-wrap: balance;
+  }
+  /* Safe-area padding for notched phones */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
   }
 }
