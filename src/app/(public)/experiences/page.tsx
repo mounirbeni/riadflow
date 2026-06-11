@@ -94,9 +94,9 @@ export default function ExperiencesPage() {
 
       <section className="py-12 md:py-20 bg-sand-50 zellige-pattern">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Category Filters */}
+          {/* Category Filters — horizontal scroll on mobile */}
           {categories.length > 0 && (
-            <div className="flex flex-wrap gap-2 justify-center mb-12">
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1 mb-10 md:mb-12 md:flex-wrap md:justify-center -mx-4 px-4 md:mx-0 md:px-0 snap-x snap-mandatory md:snap-none">
               <button
                 onClick={() => setActiveCategory(null)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
@@ -130,12 +130,13 @@ export default function ExperiencesPage() {
           {loading ? (
             <LoadingSpinner text="Loading experiences..." />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 pb-3 md:pb-0">
               {filtered.map((exp, index) => {
                 const Icon = categoryIcons[exp.category] || Sparkles;
                 return (
                   <motion.div
                     key={exp.id}
+                    className="w-[82vw] sm:w-80 md:w-auto flex-none md:flex-auto snap-start"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}

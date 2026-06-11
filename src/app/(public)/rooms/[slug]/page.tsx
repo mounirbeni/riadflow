@@ -55,6 +55,8 @@ function BookingCard({ room }: { room: Room }) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(1);
+  const [checking, setChecking] = useState(false);
+  const [availability, setAvailability] = useState<"available" | "unavailable" | null>(null);
 
   const nights = useMemo(() => {
     if (!checkIn || !checkOut) return 0;
@@ -65,11 +67,37 @@ function BookingCard({ room }: { room: Room }) {
   const total = nights * Number(room.pricePerNight);
   const deposit = total * 0.3;
 
+  // Reset availability status when dates change
+  useEffect(() => {
+    setAvailability(null);
+  }, [checkIn, checkOut, guests]);
+
+  async function checkAvailability() {
+    if (!checkIn || !checkOut) return;
+    setChecking(true);
+    try {
+      const res = await fetch(
+        `/api/rooms/available?checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}`
+      );
+      const data = await res.json();
+      if (data.success) {
+        const isAvailable = data.data.some((r: { id: string }) => r.id === room.id);
+        setAvailability(isAvailable ? "available" : "unavailable");
+      }
+    } catch {
+      // silently fail
+    } finally {
+      setChecking(false);
+    }
+  }
+
   function handleBook() {
-    const params = new URLSearchParams({ room: room.slug });
-    if (checkIn) params.set("checkIn", checkIn);
-    if (checkOut) params.set("checkOut", checkOut);
-    if (guests) params.set("guests", String(guests));
+    const params = new URLSearchParams({
+      room: room.slug,
+      checkIn,
+      checkOut,
+      guests: String(guests),
+    });
     router.push(`/booking?${params.toString()}`);
   }
 
@@ -119,7 +147,7 @@ function BookingCard({ room }: { room: Room }) {
                 type="date"
                 value={checkOut}
                 onChange={(e) => setCheckOut(e.target.value)}
-                min={checkIn || today}
+                min={checkIn ? new Date(new Date(checkIn).getTime() + 86400000).toISOString().split("T")[0] : today}
                 className="w-full pl-10 pr-3 py-2.5 border border-sand-200 rounded-xl bg-sand-50 text-sand-900 text-sm focus:outline-none focus:ring-2 focus:ring-terracotta-300"
               />
             </div>
@@ -163,13 +191,39 @@ function BookingCard({ room }: { room: Room }) {
           </div>
         )}
 
-        <Button
-          onClick={handleBook}
-          className="w-full bg-terracotta-500 hover:bg-terracotta-600 text-white rounded-xl py-5 text-base font-semibold"
-        >
-          <Calendar className="mr-2 h-5 w-5" />
-          {nights > 0 ? `Book ${nights} Night${nights > 1 ? "s" : ""}` : "Check Availability"}
-        </Button>
+        {/* Availability feedback */}
+        {availability === "available" && (
+          <div className="mb-3 flex items-center gap-2 bg-olive-50 border border-olive-200 rounded-xl px-3 py-2 text-sm text-olive-700">
+            <Check className="h-4 w-4 text-olive-500 shrink-0" />
+            Available for your dates — book now!
+          </div>
+        )}
+        {availability === "unavailable" && (
+          <div className="mb-3 flex items-center gap-2 bg-terracotta-50 border border-terracotta-200 rounded-xl px-3 py-2 text-sm text-terracotta-700">
+            <Calendar className="h-4 w-4 text-terracotta-500 shrink-0" />
+            Not available for these dates. Please try other dates.
+          </div>
+        )}
+
+        {/* CTA Button */}
+        {availability === "available" ? (
+          <Button
+            onClick={handleBook}
+            className="w-full bg-terracotta-500 hover:bg-terracotta-600 text-white rounded-xl py-5 text-base font-semibold"
+          >
+            <Calendar className="mr-2 h-5 w-5" />
+            Book {nights} Night{nights > 1 ? "s" : ""}
+          </Button>
+        ) : (
+          <Button
+            onClick={checkAvailability}
+            disabled={!checkIn || !checkOut || checking}
+            className="w-full bg-terracotta-500 hover:bg-terracotta-600 text-white rounded-xl py-5 text-base font-semibold disabled:opacity-60"
+          >
+            <Calendar className="mr-2 h-5 w-5" />
+            {checking ? "Checking…" : "Check Availability"}
+          </Button>
+        )}
 
         <div className="mt-4 space-y-2">
           <div className="flex items-center gap-2 text-xs text-sand-500">

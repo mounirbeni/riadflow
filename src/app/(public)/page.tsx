@@ -389,10 +389,10 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 pb-3 md:pb-0"
           >
             {featuredRooms.map((room) => (
-              <motion.div key={room.slug} variants={fadeInUp}>
+              <motion.div key={room.slug} variants={fadeInUp} className="w-[82vw] sm:w-80 md:w-auto flex-none md:flex-auto snap-start">
                 <Link href={`/rooms/${room.slug}`}>
                   <GlassCard className="overflow-hidden group cursor-pointer h-full flex flex-col">
                     <div className="relative h-64 overflow-hidden">
@@ -467,10 +467,10 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 pb-3 md:pb-0"
           >
             {whyUs.map((item) => (
-              <motion.div key={item.title} variants={fadeInUp}>
+              <motion.div key={item.title} variants={fadeInUp} className="w-[75vw] sm:w-72 md:w-auto flex-none md:flex-auto snap-start">
                 <GlassCard className="p-6 h-full flex flex-col items-start hover:shadow-xl transition-shadow duration-300">
                   <div className={`inline-flex items-center justify-center h-12 w-12 rounded-2xl mb-4 ${item.color}`}>
                     <item.icon className="h-6 w-6" />
@@ -501,10 +501,10 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 pb-3 sm:pb-0"
           >
             {experiences.map((exp) => (
-              <motion.div key={exp.slug} variants={fadeInUp}>
+              <motion.div key={exp.slug} variants={fadeInUp} className="w-[82vw] sm:w-auto flex-none sm:flex-auto snap-start">
                 <Link href="/experiences">
                   <div className="group relative h-80 rounded-2xl overflow-hidden cursor-pointer">
                     <Image
@@ -675,10 +675,10 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            className="flex md:grid md:grid-cols-3 gap-5 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 pb-3 md:pb-0"
           >
             {reviews.map((review) => (
-              <motion.div key={review.name} variants={fadeInUp}>
+              <motion.div key={review.name} variants={fadeInUp} className="w-[88vw] sm:w-96 md:w-auto flex-none md:flex-auto snap-start">
                 <GlassCard className="p-8 h-full flex flex-col hover:shadow-xl transition-shadow duration-300">
                   <div className="flex gap-1 mb-4">
                     {Array.from({ length: review.rating }).map((_, i) => (

@@ -131,10 +131,11 @@ export default function RoomsPage() {
               <p className="text-sand-500 text-lg">No rooms match your criteria.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0 pb-3 md:pb-0">
               {filteredRooms.map((room, index) => (
                 <motion.div
                   key={room.id}
+                  className="w-[82vw] sm:w-80 md:w-auto flex-none md:flex-auto snap-start"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
