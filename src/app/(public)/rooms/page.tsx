@@ -76,7 +76,7 @@ export default function RoomsPage() {
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1587974928442?w=1920&q=80"
             alt="Our Rooms"
             fill
             className="object-cover"

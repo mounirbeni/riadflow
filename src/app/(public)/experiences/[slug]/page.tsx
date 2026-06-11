@@ -416,7 +416,7 @@ export default function ExperienceDetailPage() {
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1528360983277?w=1920&q=80"
             alt="Riad Al Baraka"
             fill
             className="object-cover"

@@ -46,7 +46,7 @@ const featuredRooms = [
     price: 280,
     rating: 5.0,
     reviews: 3,
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1528360983277?w=800&q=80",
     guests: 2,
     beds: "1 King Bed",
     size: "55m²",
@@ -58,7 +58,7 @@ const featuredRooms = [
     price: 420,
     rating: 5.0,
     reviews: 2,
-    image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1587974928442?w=800&q=80",
     guests: 2,
     beds: "1 King Bed",
     size: "60m²",
@@ -70,7 +70,7 @@ const featuredRooms = [
     price: 350,
     rating: 5.0,
     reviews: 1,
-    image: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1577898478989?w=800&q=80",
     guests: 4,
     beds: "2 King Beds",
     size: "75m²",
@@ -115,7 +115,7 @@ const experiences = [
     description: "Full-day adventure to Berber villages, mountain valleys, and lunch with a local family.",
     price: 120,
     duration: "8 hours",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1542086260?w=800&q=80",
     icon: Mountain,
     color: "from-olive-600/80",
   },
@@ -212,7 +212,7 @@ export default function HomePage() {
       <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1528360983277?w=1920&q=80"
             alt="Luxury Moroccan Riad courtyard"
             fill
             className="object-cover"
@@ -570,7 +570,7 @@ export default function HomePage() {
             >
               <div className="relative h-[480px] rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80"
+                  src="https://images.unsplash.com/photo-1547592180?w=800&q=80"
                   alt="Moroccan Breakfast spread"
                   fill
                   className="object-cover"
@@ -827,7 +827,7 @@ export default function HomePage() {
       <section className="relative py-28 md:py-36 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1577898478989?w=1920&q=80"
             alt="Riad courtyard at night"
             fill
             className="object-cover"

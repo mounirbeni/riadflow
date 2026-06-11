@@ -53,7 +53,7 @@ export default function ContactPage() {
       <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1553361371?w=1920&q=80"
             alt="Contact"
             fill
             className="object-cover"

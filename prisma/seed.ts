@@ -187,9 +187,9 @@ async function main() {
           "Mini Bar",
         ],
         images: [
-          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
-          "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
-          "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80",
+          "https://images.unsplash.com/photo-1528360983277?w=800&q=80",
+          "https://images.unsplash.com/photo-1587974928442?w=800&q=80",
+          "https://images.unsplash.com/photo-1565197722014?w=800&q=80",
         ],
         featured: true,
         sortOrder: 1,
@@ -253,8 +253,8 @@ async function main() {
           "Mini Bar",
         ],
         images: [
-          "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80",
-          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+          "https://images.unsplash.com/photo-1577898478989?w=800&q=80",
+          "https://images.unsplash.com/photo-1528360983277?w=800&q=80",
         ],
         featured: true,
         sortOrder: 3,
@@ -283,7 +283,7 @@ async function main() {
           "Hair Dryer",
         ],
         images: [
-          "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
+          "https://images.unsplash.com/photo-1587974928442?w=800&q=80",
         ],
         featured: false,
         sortOrder: 4,
@@ -313,7 +313,7 @@ async function main() {
           "Mini Bar",
         ],
         images: [
-          "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80",
+          "https://images.unsplash.com/photo-1565197722014?w=800&q=80",
         ],
         featured: false,
         sortOrder: 5,
@@ -346,8 +346,8 @@ async function main() {
           "Flat Screen TV",
         ],
         images: [
-          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
-          "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
+          "https://images.unsplash.com/photo-1528360983277?w=800&q=80",
+          "https://images.unsplash.com/photo-1587974928442?w=800&q=80",
         ],
         featured: true,
         sortOrder: 6,
@@ -434,7 +434,7 @@ async function main() {
         shortDesc: "Full-day Berber village and mountain hiking adventure",
         price: 120,
         duration: "8 hours",
-        image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
+        image: "https://images.unsplash.com/photo-1542086260?w=800&q=80",
         category: ExperienceCategory.EXCURSION,
         sortOrder: 5,
       },
@@ -495,10 +495,10 @@ async function main() {
   const galleryImages = await Promise.all([
     // ROOMS
     prisma.galleryImage.create({
-      data: { url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80", caption: "Sultan Suite – Main Bedroom", category: GalleryCategory.ROOMS, sortOrder: 1 },
+      data: { url: "https://images.unsplash.com/photo-1528360983277?w=800&q=80", caption: "Sultan Suite – Main Bedroom", category: GalleryCategory.ROOMS, sortOrder: 1 },
     }),
     prisma.galleryImage.create({
-      data: { url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80", caption: "Atlas Suite – Living Area", category: GalleryCategory.ROOMS, sortOrder: 2 },
+      data: { url: "https://images.unsplash.com/photo-1565197722014?w=800&q=80", caption: "Atlas Suite – Living Area", category: GalleryCategory.ROOMS, sortOrder: 2 },
     }),
     prisma.galleryImage.create({
       data: { url: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=80", caption: "Marrakech Room – Bedroom", category: GalleryCategory.ROOMS, sortOrder: 3 },
@@ -507,11 +507,11 @@ async function main() {
       data: { url: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80", caption: "Kasbah Suite – Terrace View", category: GalleryCategory.ROOMS, sortOrder: 4 },
     }),
     prisma.galleryImage.create({
-      data: { url: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80", caption: "Riad Garden Room – Bathroom", category: GalleryCategory.ROOMS, sortOrder: 5 },
+      data: { url: "https://images.unsplash.com/photo-1577898478989?w=800&q=80", caption: "Riad Garden Room – Bathroom", category: GalleryCategory.ROOMS, sortOrder: 5 },
     }),
     // RIAD
     prisma.galleryImage.create({
-      data: { url: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80", caption: "Central Courtyard Fountain", category: GalleryCategory.RIAD, sortOrder: 6 },
+      data: { url: "https://images.unsplash.com/photo-1587974928442?w=800&q=80", caption: "Central Courtyard Fountain", category: GalleryCategory.RIAD, sortOrder: 6 },
     }),
     prisma.galleryImage.create({
       data: { url: "https://images.unsplash.com/photo-1595351298020-038700609878?w=800&q=80", caption: "Rooftop Terrace at Sunset", category: GalleryCategory.RIAD, sortOrder: 7 },
@@ -527,7 +527,7 @@ async function main() {
       data: { url: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80", caption: "Rooftop Dinner Under the Stars", category: GalleryCategory.FOOD, sortOrder: 10 },
     }),
     prisma.galleryImage.create({
-      data: { url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80", caption: "Traditional Moroccan Breakfast", category: GalleryCategory.FOOD, sortOrder: 11 },
+      data: { url: "https://images.unsplash.com/photo-1547592180?w=800&q=80", caption: "Traditional Moroccan Breakfast", category: GalleryCategory.FOOD, sortOrder: 11 },
     }),
     prisma.galleryImage.create({
       data: { url: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800&q=80", caption: "Lamb Tagine with Prunes", category: GalleryCategory.FOOD, sortOrder: 12 },

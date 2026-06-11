@@ -102,7 +102,7 @@ export default function AboutPage() {
       <section className="relative h-[60vh] min-h-[450px] flex items-center justify-center">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1577898478989?w=1920&q=80"
             alt="About Riad Al Baraka"
             fill
             className="object-cover"
@@ -154,7 +154,7 @@ export default function AboutPage() {
             >
               <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80"
+                  src="https://images.unsplash.com/photo-1528360983277?w=800&q=80"
                   alt="Riad Al Baraka Courtyard"
                   fill
                   className="object-cover"
@@ -297,7 +297,7 @@ export default function AboutPage() {
       <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1587974928442?w=1920&q=80"
             alt="Riad courtyard"
             fill
             className="object-cover"
