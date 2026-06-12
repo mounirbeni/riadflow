@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 interface GlassCardProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   variant?: "default" | "dark" | "elevated" | "frosted";
   shimmer?: boolean;
 }
@@ -10,11 +11,13 @@ interface GlassCardProps {
 export function GlassCard({
   children,
   className,
+  style,
   variant = "default",
   shimmer = false,
 }: GlassCardProps) {
   return (
     <div
+      style={style}
       className={cn(
         "relative rounded-2xl border transition-all duration-300 overflow-hidden",
         variant === "default" && [
